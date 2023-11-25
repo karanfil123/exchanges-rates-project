@@ -1,0 +1,79 @@
+version: '3.4'
+
+services:
+  currencywebsite:
+    image: ${DOCKER_REGISTRY-}currencywebsite
+    build:
+      context: .
+      dockerfile: CurrencyWebSite/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "2002:80"
+      - "5002:443"
+    volumes:
+      - ~/.aspnet/https:/root/.aspnet/https:ro
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+    networks:
+      - exchangerates
+
+  dataapi:
+    image: ${DOCKER_REGISTRY-}dataapi
+    build:
+      context: .
+      dockerfile: DataApi/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "2000:80"
+      - "5000:443"
+    volumes:
+      - ~/.aspnet/https:/root/.aspnet/https:ro
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+    depends_on:
+      - postgresql
+    networks:
+      - exchangerates
+
+
+  businnessapi:
+    image: ${DOCKER_REGISTRY-}businnessapi
+    build:
+      context: .
+      dockerfile: BusinnessApi/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "2001:80"
+      - "5001:443" 
+    volumes:
+      - ~/.aspnet/https:/root/.aspnet/https:ro
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+    depends_on:
+      - postgresql
+    networks:
+      - exchangerates
+
+  postgresql:
+    image: postgres
+    container_name: 'postgressql'
+    restart: always
+    environment:
+       POSTGRES_USER: postgres
+       POSTGRES_PASSWORD: 12345
+    volumes:
+      - exchangeratesdatas:/var/lib/postgresql/data     
+    ports:
+      - "5432:5432"
+    networks:
+      - exchangerates
+
+volumes:
+  exchangeratesdatas:
+networks:
+  exchangerates:
+    driver: bridge  
+
