@@ -34,3 +34,5 @@ Projeyi çalıştırmak için Docker kullanılır. Docker-compose ile aşağıda
 - Business API
 - Veritabanı Sunucusu
 - Currency Web Sitesi
+
+![Exchange Rate Project](https://i.hizliresim.com/8u0i1dg.png)
