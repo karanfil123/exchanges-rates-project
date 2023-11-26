@@ -1,4 +1,3 @@
-using BusinnessApi.Models;
 using BusinnessApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BusinnessApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ExchageRateController : ControllerBase
     {
         private readonly ICurrencyService _service;

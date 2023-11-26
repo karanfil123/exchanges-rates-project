@@ -1,8 +1,16 @@
 ﻿$(document).ready(function () {
     var myChart = null;
+
+    $.get(`https://localhost:5000/api/Currency/addCurrencyData`, function (data) {
+        console.log(data)
+    })
+
+
     $('#searchBtn').click(function () {
-        const rateCode = $('#rateInput').val();
-        $.get(`https://localhost:5001/ExchageRate/rates/${rateCode}`, function (data) {
+        const rateCode = $('#rateInput').val();      
+
+
+        $.get(`https://localhost:5001/api/ExchageRate/rates/${rateCode}`, function (data) {
             if (myChart !== null) {
                 myChart.destroy(); 
             }

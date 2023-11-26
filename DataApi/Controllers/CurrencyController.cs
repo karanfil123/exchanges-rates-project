@@ -14,7 +14,7 @@ namespace DataApi.Controllers
             _currencyService = currencyService;
         }
 
-        [HttpPost("addcCurrencyData")]
+        [HttpPost("addCurrencyData")]
         public async Task<IActionResult> AddTwoMountsCurrencyData()
         {
             try
